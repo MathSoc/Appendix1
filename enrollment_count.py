@@ -12,6 +12,15 @@ def calculate_priority(cons: Constituency):
 
 seats_avaialble = 21
 
+##########################################
+#       REPLACE THESE VARIABLES
+##########################################
+fileName = "pub_enrolment_heads_csv_fall2020_1.csv"
+year = "2020/21"
+term = "Fall term"
+##########################################
+
+
 thisdict = {
     "firstYears": Constituency(), 
     "actSci": Constituency(),
@@ -24,11 +33,11 @@ thisdict = {
     "teaching": Constituency()
 }
 
-with open("pub_enrolment_heads_csv_fall2020_1.csv") as f:
+with open(fileName) as f:
     data = csv.reader(f, delimiter='^')
 
     for row in data:
-        if (row[5] == "2020/21") and (row[9] == "Fall term") and (row[7] == "Bachelors"):
+        if (row[5] == year) and (row[9] == term) and (row[7] == "Bachelors"):
             if (row[8] == "1" and (row[4] == "MATH" or row[4] == "CFM")):
                 thisdict["firstYears"].students += int(row[13])
             elif (row[6] == "Actuarial Science"):
@@ -79,7 +88,7 @@ with open("pub_enrolment_heads_csv_fall2020_1.csv") as f:
 
 print("Students per Constituency:")
 for key in thisdict.keys():
-    print(key + ":" + str(thisdict[key].students))
+    print(key + ": " + str(thisdict[key].students))
 
 
 for cons in thisdict.values():
@@ -97,7 +106,7 @@ while (seats_avaialble > 0):
         elif (thisdict[key].priority == highest):
             print("This part has not been implemented yet. Add implementation when required")
             exit
-    print(highest_key + ":" + str(thisdict[highest_key].priority))
+    print(highest_key + ": " + str(thisdict[highest_key].priority))
     thisdict[highest_key].seats += 1
     calculate_priority(thisdict[highest_key])
 
@@ -105,6 +114,6 @@ while (seats_avaialble > 0):
 
 print("\n\nSeat Allocations:")
 for key in thisdict.keys():
-    print(key + ":" + str(thisdict[key].seats))
+    print(key + ": " + str(thisdict[key].seats))
 
 
