@@ -15,9 +15,22 @@ seats_avaialble = 21
 ##########################################
 #       REPLACE THESE VARIABLES
 ##########################################
-fileName = "pub_enrolment_heads_csv_fall2020_1.csv"
+fileName = "pub_enrolment_heads_csv_spring2021.csv"
 year = "2020/21"
-term = "Fall term"
+term = "Winter term"
+##########################################
+
+
+##########################################
+#       CHECK THAT THESE LINE UP IN THE SPREADSHEET
+##########################################
+year_column = 5
+term_column = 9
+level_column = 7
+study_year_column = 8
+faculty_column = 4
+program_column = 6
+headcount_column = 12
 ##########################################
 
 
@@ -30,59 +43,65 @@ thisdict = {
     "other": Constituency(),
     "pmamco": Constituency(),
     "se": Constituency(),
+    "stats": Constituency(),
     "teaching": Constituency()
 }
 
 with open(fileName) as f:
-    data = csv.reader(f, delimiter='^')
+    data = csv.reader(f, delimiter=',')
 
     for row in data:
-        if (row[5] == year) and (row[9] == term) and (row[7] == "Bachelors"):
-            if (row[8] == "1" and (row[4] == "MATH" or row[4] == "CFM")):
-                thisdict["firstYears"].students += int(row[13])
-            elif (row[6] == "Actuarial Science"):
-                thisdict["actSci"].students += int(row[13])
-            elif (row[6] == "Applied Mathematics"):
-                thisdict["pmamco"].students += int(row[13])
-            elif (row[6] == "Business Administration and Computer Science"):
-                thisdict["business"].students += int(row[13])
-                thisdict["cs"].students += int(row[13])
-            elif(row[6] == "Business Administration and Mathematics"):
-                thisdict["business"].students += int(row[13])
-            elif(row[6] == "Chartered Professional Accountancy"):
-                thisdict["business"].students += int(row[13])
-            elif (row[6] == "Combinatorics and Optimization"):
-                thisdict["pmamco"].students += int(row[13])
-            elif (row[6] == "Computational Mathematics"):
-                thisdict["cs"].students += int(row[13])
-                thisdict["pmamco"].students += int(row[13])
-            elif (row[6] == "Computer Science"):
-                thisdict["cs"].students += int(row[13])
-            elif (row[6] =="Financial Analysis and Risk Management"):
-                thisdict["business"].students += int(row[13])
-            elif (row[6] == "Information Technology Management"):
-                thisdict["business"].students += int(row[13])
-            elif (row[6] == "Mathematical Finance"):
-                thisdict["actSci"].students+= int(row[13])
-                thisdict["pmamco"].students += int(row[13])
-            elif (row[6] == "Mathematical Studies"):
-               thisdict["other"].students += int(row[13])
-            elif (row[6] == "Mathematics"):
-                thisdict["other"].students += int(row[13])
-            elif (row[6] == "Mathematics/Business Administration"):
-                thisdict["business"].students += int(row[13])
-            elif (row[6] == "Mathematics/Teaching"):
-                thisdict["teaching"].students += int(row[13])
-            elif(row[6] == "Pure Mathematics"):
-                thisdict["pmamco"].students += int(row[13])
-            elif(row[6] == "Statistics"):
-                thisdict["actSci"].students += int(row[13])
-            elif (row[4] == "MATH"):
-                thisdict["other"].students += int(row[13])
-            elif (row[4] == "CFM"):
-                thisdict["cfm"].students += int(row[13])
-            elif (row[4] == "SE"):
-                thisdict["se"].students += int(row[13])
+        if (row[year_column] == year) and (row[term_column] == term) and (row[level_column] == "Bachelors"):
+            if (row[study_year_column] == "1" and (row[faculty_column] == "MATH" or row[faculty_column] == "CFM")):
+                thisdict["firstYears"].students += int(row[headcount_column])
+            elif (row[program_column] == "Actuarial Science"):
+                thisdict["actSci"].students += int(row[headcount_column])
+            elif (row[program_column] == "Applied Mathematics"):
+                thisdict["pmamco"].students += int(row[headcount_column])
+            elif(row[program_column] == "Bioinformatics"):
+                thisdict["stats"].students += int(row[headcount_column])
+            elif (row[program_column] == "Business Administration and Computer Science"):
+                thisdict["business"].students += int(row[headcount_column])
+                thisdict["cs"].students += int(row[headcount_column])
+            elif(row[program_column] == "Business Administration and Mathematics"):
+                thisdict["business"].students += int(row[headcount_column])
+            elif(row[program_column] == "Chartered Professional Accountancy"):
+                thisdict["business"].students += int(row[headcount_column])
+            elif (row[program_column] == "Combinatorics and Optimization"):
+                thisdict["pmamco"].students += int(row[headcount_column])
+            elif (row[program_column] == "Computational Mathematics"):
+                thisdict["cs"].students += int(row[headcount_column])
+                thisdict["pmamco"].students += int(row[headcount_column])
+            elif (row[program_column] == "Computer Science"):
+                thisdict["cs"].students += int(row[headcount_column])
+            elif(row[program_column] == "Data Science"):
+                thisdict["stats"].students += int(row[headcount_column])
+                thisdict["cs"].students += int(row[headcount_column])
+            elif (row[program_column] =="Financial Analysis and Risk Management"):
+                thisdict["business"].students += int(row[headcount_column])
+            elif (row[program_column] == "Information Technology Management"):
+                thisdict["business"].students += int(row[headcount_column])
+            elif (row[program_column] == "Mathematical Finance"):
+                thisdict["actSci"].students+= int(row[headcount_column])
+                thisdict["pmamco"].students += int(row[headcount_column])
+            elif (row[program_column] == "Mathematical Studies"):
+               thisdict["other"].students += int(row[headcount_column])
+            elif (row[program_column] == "Mathematics"):
+                thisdict["other"].students += int(row[headcount_column])
+            elif (row[program_column] == "Mathematics/Business Administration"):
+                thisdict["business"].students += int(row[headcount_column])
+            elif (row[program_column] == "Mathematics/Teaching"):
+                thisdict["teaching"].students += int(row[headcount_column])
+            elif(row[program_column] == "Pure Mathematics"):
+                thisdict["pmamco"].students += int(row[headcount_column])
+            elif(row[program_column] == "Statistics"):
+                thisdict["stats"].students += int(row[headcount_column])
+            elif (row[faculty_column] == "MATH"):
+                thisdict["other"].students += int(row[headcount_column])
+            elif (row[faculty_column] == "CFM"):
+                thisdict["cfm"].students += int(row[headcount_column])
+            elif (row[faculty_column] == "SE"):
+                thisdict["se"].students += int(row[headcount_column])
             else:
                 continue
 
